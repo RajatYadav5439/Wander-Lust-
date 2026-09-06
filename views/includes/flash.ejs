@@ -1,0 +1,85 @@
+<style>
+  .flash-alert {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 400px;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideDown 0.5s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+  }
+  
+  .flash-alert.fade-out {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+</style>
+
+<% if(success && success.length) { %>
+<div class="alert alert-success alert-dismissible fade show flash-alert" role="alert" id="successAlert">
+    <i class="fa-solid fa-circle-check"></i> <%= success %>
+   <button 
+   type="button" 
+   class="btn-close" 
+   data-bs-dismiss="alert" 
+   aria-label="Close"
+   ></button>
+</div>
+<% } %>
+
+<% if(error && error.length) { %>
+<div class="alert alert-danger alert-dismissible fade show flash-alert" role="alert" id="errorAlert">
+    <i class="fa-solid fa-circle-exclamation"></i> <%= error %>
+   <button 
+   type="button" 
+   class="btn-close" 
+   data-bs-dismiss="alert" 
+   aria-label="Close"
+   ></button>
+</div>
+<% } %>
+
+<script>
+  // Auto-dismiss flash messages after 2 seconds
+  document.addEventListener('DOMContentLoaded', function() {
+    const successAlert = document.getElementById('successAlert');
+    const errorAlert = document.getElementById('errorAlert');
+    
+    function autoDismiss(alertElement) {
+      if (alertElement) {
+        setTimeout(() => {
+          alertElement.classList.add('fade-out');
+          setTimeout(() => {
+            alertElement.remove();
+          }, 500); // Wait for animation to complete
+        }, 2000); // 2 seconds
+      }
+    }
+    
+    autoDismiss(successAlert);
+    autoDismiss(errorAlert);
+  });
+</script>

@@ -1,0 +1,51 @@
+<% layout("/layouts/boilerplate") %>
+
+<div style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 17.5rem); padding: 2rem 0;">
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4" style="color: #667eea; font-weight: bold;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </h3>
+                
+                <form action="/login" method="post" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            <i class="fa-solid fa-user"></i> Username
+                        </label>
+                        <input  
+                            name="username" 
+                            id="username"
+                            type="text"  
+                            class="form-control"
+                            placeholder="Enter your username"
+                            required
+                        />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            <i class="fa-solid fa-lock"></i> Password
+                        </label>
+                        <input  
+                            name="password" 
+                            id="password"
+                            type="password"  
+                            class="form-control"
+                            placeholder="Enter your password"
+                            required
+                        />
+                    </div>
+
+                    <button class="btn btn-primary w-100 mb-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; padding: 0.7rem; font-weight: 600; border-radius: 10px;">
+                        Login
+                    </button>
+                    
+                    <p class="text-center mb-0">
+                        Don't have an account? <a href="/signup" style="color: #667eea; font-weight: 600;">Sign Up</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

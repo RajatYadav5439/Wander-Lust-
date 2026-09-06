@@ -1,0 +1,160 @@
+
+<% layout("/layouts/boilerplate") %>
+  <body>
+
+    <style>
+      .tax-container {
+        display: flex;
+        justify-content: flex-end;
+        margin: 1rem 2rem 1rem 0;
+      }
+      
+      .tax-toggle-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 0.6rem 1.2rem;
+        border-radius: 30px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        transition: all 0.3s ease;
+      }
+      
+      .tax-toggle-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+      }
+      
+      .tax-switch {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      
+      .tax-switch .form-check-input {
+        width: 45px;
+        height: 24px;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+      }
+      
+      .tax-switch .form-check-input:checked {
+        background-color: #ffd700;
+        border-color: #ffd700;
+      }
+      
+      .tax-switch .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+      }
+      
+      .tax-label {
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      
+      .tax-label i {
+        font-size: 1rem;
+        color: #ffd700;
+      }
+      
+      .tax-info {
+        display: none;
+        color: #28a745;
+        font-weight: 600;
+      }
+    </style>
+    
+    <div class="tax-container">
+      <div class="tax-toggle-card">
+        <div class="tax-switch form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+          <label class="tax-label form-check-label" for="switchCheckDefault">
+            <i class="fa-solid fa-calculator"></i>
+            Taxes (15% GST)
+          </label>
+        </div>
+      </div>
+    </div>
+   
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 " style="margin-top:1rem ;">
+      <% for(let listing of allListings) { %>
+        <a href="/listings/<%=listing._id%>" class="listing-link">
+       <div class="card col listing-card" >
+          <img 
+             src="/listings/<%= listing._id %>/image"  
+             class="card-img-top"
+             alt="listing_image" 
+             style="height: 20rem ;"
+           >
+         <div class="card-img-overlay"></div>
+         <div class="card-body">
+          <p class="card-text">
+           <b><%= listing.title %></b>
+           <br>
+           &#8377; <span class="original-price"><%= listing.price.toLocaleString("en-IN") %></span><span class="price-with-tax" style="display: none;"><%= (listing.price * 1.15).toLocaleString("en-IN") %></span> / night
+           <i class="tax-info"> &nbsp; +15% GST</i>
+          </p>
+         </div>
+       </div>
+      </a>
+     <% } %>
+   </div>
+  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // ...existing code...
+      // Hide search box if form is submitted
+      const searchForm = document.getElementById('searchForm');
+      if (searchForm) {
+        searchForm.addEventListener('submit', function() {
+          searchForm.style.display = 'none';
+        });
+      }
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let taxSwitch = document.getElementById("switchCheckDefault");
+      
+      if (taxSwitch) {
+        taxSwitch.addEventListener("change", function() {
+          let taxInfo = document.getElementsByClassName("tax-info");
+          let originalPrices = document.getElementsByClassName("original-price");
+          let pricesWithTax = document.getElementsByClassName("price-with-tax");
+          
+          if (this.checked) {
+            // Show tax info and price with tax
+            for (let info of taxInfo) {
+              info.style.display = "inline";
+            }
+            for (let price of originalPrices) {
+              price.style.display = "none";
+            }
+            for (let price of pricesWithTax) {
+              price.style.display = "inline";
+            }
+          } else {
+            // Hide tax info and show original price
+            for (let info of taxInfo) {
+              info.style.display = "none";
+            }
+            for (let price of originalPrices) {
+              price.style.display = "inline";
+            }
+            for (let price of pricesWithTax) {
+              price.style.display = "none";
+            }
+          }
+        });
+      }
+    });
+  </script>
+
